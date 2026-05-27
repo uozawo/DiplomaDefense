@@ -49,6 +49,18 @@ namespace DiplomaDefense.Core
             Status = other.Status;
         }
 
+        // чи прийняв керівник цей етап
+        public bool IsApproved()
+        {
+            return Status == StageStatus.Approved;
+        }
+
+        // чи минув термін а етап ще не прийнятий
+        public bool IsOverdue()
+        {
+            return DateTime.Now > Deadline && Status != StageStatus.Approved;
+        }
+
         // рядок у файл. "S" значить звичайний етап. '~' розділяє поля
         public virtual string ToFileString()
         {
@@ -57,7 +69,8 @@ namespace DiplomaDefense.Core
 
         public override string ToString()
         {
-            return Name + " — " + Status + " (до " + Deadline.ToString("dd.MM.yyyy") + ")";
+            string late = IsOverdue() ? " [прострочено]" : "";
+            return Name + " — " + Status + " (до " + Deadline.ToString("dd.MM.yyyy") + ")" + late;
         }
     }
 }
