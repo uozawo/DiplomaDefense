@@ -44,5 +44,28 @@ namespace DiplomaDefense.Core
         {
             return Id + ";" + FirstName + ";" + LastName + ";" + Group + ";" + RecordBook;
         }
+
+        // порівнюємо двох студентів по id
+        public static bool operator ==(Student a, Student b)
+        {
+            if (ReferenceEquals(a, b)) return true;
+            if (a is null || b is null) return false;
+            return a.Id == b.Id;
+        }
+
+        public static bool operator !=(Student a, Student b)
+        {
+            return !(a == b);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Student other && this == other;
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
     }
 }

@@ -118,5 +118,28 @@ namespace DiplomaDefense.Core
         {
             return "проект " + Id + " | " + Topic + " | готовність " + GetProgress() + "%";
         }
+
+        // порівнюємо два проекти по id
+        public static bool operator ==(DiplomaProject a, DiplomaProject b)
+        {
+            if (ReferenceEquals(a, b)) return true;
+            if (a is null || b is null) return false;
+            return a.Id == b.Id;
+        }
+
+        public static bool operator !=(DiplomaProject a, DiplomaProject b)
+        {
+            return !(a == b);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is DiplomaProject other && this == other;
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
     }
 }
